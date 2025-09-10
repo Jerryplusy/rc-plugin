@@ -55,28 +55,3 @@ export async function saveTDL(url, isOversea, proxyAddr) {
         })
     })
 }
-
-/**
- * 上传文件到飞机收藏夹
- * @param filePath
- * @param isOversea
- * @param proxyAddr
- * @returns {Promise<void>}
- */
-export async function uploadTDL(filePath, isOversea, proxyAddr) {
-    return new Promise((resolve, reject) => {
-        const proxyStr = isOversea ? `` : `--proxy ${ proxyAddr }`;
-        const command = `tdl up -p ${ filePath } ${ proxyStr }`;
-        exec(command, (error, stdout, stderr) => {
-            if (error) {
-                reject(`[R插件][TDL上传]执行出错: ${ error.message }`);
-                return;
-            }
-            if (stderr) {
-                reject(`[R插件][TDL上传]错误信息: ${ stderr }`);
-                return;
-            }
-            resolve(stdout);
-        })
-    })
-}

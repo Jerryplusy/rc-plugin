@@ -51,38 +51,3 @@ export async function redisExistAndGetKey(key) {
     }
     return null;
 }
-
-/**
- * 在某个 key 的末尾插入一个对象
- * @param key
- * @param obj
- * @returns {Promise<void>}
- * @example
- * await redisExistAndInsertObject('myKey', { newKey: 'newValue' });
- */
-export async function redisExistAndInsertObject(key, obj) {
-    let objs = await redisExistAndGetKey(key);
-    if (objs) {
-        objs = { ...objs, ...obj };
-        await redisSetKey(key, objs);
-    } else {
-        await redisSetKey(key, obj);
-    }
-}
-
-/**
- * 更新Redis中某个对象的值
- * @param key
- * @param updateKey
- * @param updateObj
- * @returns {Promise<void>}
- * @example
- * await redisExistAndUpdateObject('myKey', 'updateKey', { foo: 'bar' });
- */
-export async function redisExistAndUpdateObject(key, updateKey, updateObj) {
-    let objs = await redisExistAndGetKey(key);
-    if (Object.keys(objs).includes(updateKey)) {
-        objs[updateKey] = updateObj;
-        await redisSetKey(key, objs);
-    }
-}
