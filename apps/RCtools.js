@@ -157,6 +157,8 @@ export class RCtools extends plugin {
     this.forceOverseasServer = this.toolsConfig.forceOverseasServer;
     // 解析图片是否合并转发
     this.globalImageLimit = this.toolsConfig.globalImageLimit;
+    //💩💩💩
+    this.nickName = '真寻';
   }
 
   /**
@@ -283,12 +285,12 @@ export class RCtools extends plugin {
         segment.image(user_cover),
         segment.image(keyframe),
         [
-          `${this.identifyPrefix}识别：哔哩哔哩直播，${title}`,
-          `${description ? `📝 简述：${description.replace(`&lt;p&gt;`, '').replace(`&lt;/p&gt;`, '')}` : ''}`,
-          `${tags ? `🔖 标签：${tags}` : ''}`,
-          `📍 分区：${parent_area_name ? `${parent_area_name}` : ''}${area_name ? `-${area_name}` : ''}`,
-          `${live_time ? `⏰ 直播时间：${live_time}` : ''}`,
-          `📺 独立播放器: https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=${streamId}`,
+          `哼哼~${this.nickName}发现了一个哔哩哔哩直播!，${title}`,
+          `${description ? `简单描述一下: ${description.replace(`&lt;p&gt;`, '').replace(`&lt;/p&gt;`, '')}` : ''}`,
+          `${tags ? `标签是: ${tags}` : ''}`,
+          `属于: ${parent_area_name ? `${parent_area_name}` : ''}${area_name ? `-${area_name}` : ''}`,
+          `${live_time ? `直播时间是: ${live_time}` : ''}`,
+          `想看的话可以戳这里看奥: https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid=${streamId}`,
         ]
           .filter((item) => item.trim() !== '')
           .join('\n'),
@@ -310,7 +312,7 @@ export class RCtools extends plugin {
       url.includes('bilibili.com\/dynamic')
     ) {
       if (_.isEmpty(this.biliSessData)) {
-        e.reply('检测到没有填写biliSessData，无法解析动态');
+        e.reply(`看起来${this.nickName}暂时没有biliSessData呢..没法解析动态了..`);
         return true;
       }
       url = this.biliDynamic(e, url, this.biliSessData);
@@ -391,7 +393,7 @@ export class RCtools extends plugin {
       summary &&
         e.reply(
           await Bot.makeForwardMsg(
-            textArrayToMakeForward(e, [`「R插件 x bilibili」联合为您总结内容：`, summary])
+            textArrayToMakeForward(e, [`诺,${this.nickName}已经把内容给你整理好了噢:`, summary])
           )
         );
     }
@@ -399,7 +401,7 @@ export class RCtools extends plugin {
     if (isLimitDuration) {
       const durationInMinutes = (durationForCheck / 60).toFixed(0); // 使用 durationForCheck
       biliInfo.push(
-        `${DIVIDING_LINE.replace('{}', '限制说明')}\n当前视频时长约：${durationInMinutes}分钟，\n大于管理员设置的最大时长 ${(this.biliDuration / 60).toFixed(2).replace(/\.00$/, '')} 分钟！`
+        `${DIVIDING_LINE.replace('{}', '这视频真代派')}\n当前视频时长约:${durationInMinutes}分钟,\n大于${this.nickName}的管理员设置的最大时长 ${(this.biliDuration / 60).toFixed(2).replace(/\.00$/, '')} 分钟噢..`
       );
       e.reply(biliInfo);
       return true;
@@ -485,16 +487,16 @@ export class RCtools extends plugin {
     if (this.biliDisplayIntro) {
       // 过滤简介中的一些链接
       const filteredDesc = await filterBiliDescLink(desc);
-      combineContent += `\n📝 简介：${truncateString(filteredDesc, this.toolsConfig.biliIntroLenLimit || BILI_DEFAULT_INTRO_LEN_LIMIT)}`;
+      combineContent += `\n简介:${truncateString(filteredDesc, this.toolsConfig.biliIntroLenLimit || BILI_DEFAULT_INTRO_LEN_LIMIT)}`;
     }
     // 是否显示在线人数
     if (this.biliDisplayOnline) {
       // 拼接在线人数
       const onlineTotal = await this.biliOnlineTotal(bvid, cid);
-      combineContent += `\n🏄‍♂️️ 当前视频有 ${onlineTotal.total} 人在观看，其中 ${onlineTotal.count} 人在网页端观看`;
+      combineContent += `\n吼吼吼~当前视频有 ${onlineTotal.total} 人在观看,其中 ${onlineTotal.count} 人在网页端观看!`;
     }
 
-    let finalTitle = `${this.identifyPrefix}识别：哔哩哔哩，${displayTitle}`;
+    let finalTitle = `哼哼~${this.nickName}发现了一个哔哩哔哩视频! 名字叫做${displayTitle}`;
     // 如果有多P标题，并且它和主标题不一样，则添加
     if (partTitle && partTitle !== displayTitle) {
       finalTitle += `|${pParam}P: ${partTitle}`;
@@ -555,10 +557,10 @@ export class RCtools extends plugin {
     e.reply(
       [
         segment.image(resp.result.cover),
-        `${this.identifyPrefix}识别：哔哩哔哩番剧，${title}\n🎯 评分: ${result?.rating?.score ?? '-'} / ${result?.rating?.count ?? '-'}\n📺 ${result.new_ep.desc}, ${result.seasons[0].new_ep.index_show}\n`,
+        `哼哼~${this.nickName}发现了哔哩哔哩的一部番剧!${title}\n评分竟然高达:${result?.rating?.score ?? '-'} / ${result?.rating?.count ?? '-'}\n ${result.new_ep.desc}, ${result.seasons[0].new_ep.index_show}\n`,
         `${formatBiliInfo(dataProcessMap)}`,
-        `\n\n🪶 在线观看： ${await urlTransformShortLink(ANIME_SERIES_SEARCH_LINK + title)}`,
-        `\n🌸 在线观看： ${await urlTransformShortLink(ANIME_SERIES_SEARCH_LINK2 + title)}`,
+        `\n\n在线观看： ${await urlTransformShortLink(ANIME_SERIES_SEARCH_LINK + title)}`,
+        `\n在线观看： ${await urlTransformShortLink(ANIME_SERIES_SEARCH_LINK2 + title)}`,
       ],
       true
     );
@@ -595,7 +597,6 @@ export class RCtools extends plugin {
           // 发送视频
           return this.sendVideoToUpload(e, `${tempPath}.mp4`);
         }
-        e.reply('🚧 R插件提醒你：开启但未检测到当前环境有【BBDown】，即将使用默认下载方式 ( ◡̀_◡́)ᕤ');
       }
       // =================默认下载方式=====================
       try {
@@ -626,7 +627,7 @@ export class RCtools extends plugin {
       } catch (err) {
         // 错误处理
         logger.error('[R插件][哔哩哔哩视频发送]下载错误，具体原因为:', err);
-        e.reply('解析失败，请重试一下');
+        e.reply('呜呜..解析失败了..请重试一下');
       }
     });
   }
@@ -673,7 +674,7 @@ export class RCtools extends plugin {
       if (resp.dynamicSrc.length > 0 || resp.dynamicDesc) {
         // 先发送动态描述文本
         if (resp.dynamicDesc) {
-          e.reply(`${this.identifyPrefix}识别：哔哩哔哩动态\n${resp.dynamicDesc}`);
+          e.reply(`${this.nickName}发现了一条哔哩哔哩动态!\n${resp.dynamicDesc}`);
         }
 
         // 处理图片消息
@@ -694,7 +695,7 @@ export class RCtools extends plugin {
           }
         }
       } else {
-        await e.reply(`${this.identifyPrefix}识别：哔哩哔哩动态, 但是失败！`);
+        await e.reply(`${this.nickName}发现了一条哔哩哔哩动态, 但是解析失败！`);
       }
     });
     return url;
@@ -798,9 +799,7 @@ export class RCtools extends plugin {
       logger.debug(
         `[R插件][General Adapter Debug] Adapter object: ${JSON.stringify(adapter, null, 2)}`
       );
-      e.reply(
-        `${this.identifyPrefix}识别：${adapter.name}${adapter.desc ? `, ${adapter.desc}` : ''}`
-      );
+      e.reply(`${this.nickName}识别: ${adapter.name}${adapter.desc ? `, ${adapter.desc}` : ''}`);
       logger.debug(adapter);
       logger.debug(
         `[R插件][General Adapter Debug] adapter.images: ${JSON.stringify(adapter.images)}`
@@ -831,7 +830,7 @@ export class RCtools extends plugin {
         logger.debug(
           `[R插件][General Adapter Debug] No images or video found for ${adapter.name}. Replying with failure message.`
         );
-        e.reply('解析失败：无法获取到资源');
+        e.reply('解析失败..无法获取到资源');
       }
     } catch (err) {
       logger.error('解析失败 ', err);
@@ -882,7 +881,7 @@ export class RCtools extends plugin {
       } catch (e) {
         realContent = content;
       }
-      const normalMsg = `${this.identifyPrefix}识别：米游社，${subject}\n${realContent?.describe || ''}`;
+      const normalMsg = `${this.nickName}发现了一条米游社! ${subject}\n${realContent?.describe || ''}`;
       const replyMsg = cover ? [segment.image(cover), normalMsg] : normalMsg;
       e.reply(replyMsg);
       // 图片
@@ -1340,7 +1339,7 @@ export class RCtools extends plugin {
       // 正常发送视频
       if (videoSize > videoSizeLimit) {
         e.reply(
-          `当前视频大小：${videoSize}MB，\n大于设置的最大限制：${videoSizeLimit}MB，\n改为上传群文件`
+          `当前视频大小：${videoSize}MB，\n大于${this.nickName}管理员设置的最大限制${videoSizeLimit}MB..\n改为上传群文件`
         );
         await this.uploadGroupFile(e, path); // uploadGroupFile 内部会处理删除
       } else {
