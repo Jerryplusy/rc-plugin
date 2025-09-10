@@ -21,9 +21,6 @@ export default class Base {
 
   /**
    * 截图默认数据
-   * @param saveId html保存id
-   * @param tplFile 模板html路径
-   * @param pluResPath 插件资源路径
    */
   get screenData() {
     return {
