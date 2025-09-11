@@ -7,7 +7,7 @@
  * console.log(exists); // true or false
  */
 export async function redisExistKey(key) {
-    return redis.exists(key);
+  return redis.exists(key);
 }
 
 /**
@@ -19,7 +19,7 @@ export async function redisExistKey(key) {
  * console.log(value); // { ... }
  */
 export async function redisGetKey(key) {
-    return JSON.parse(await redis.get(key));
+  return JSON.parse(await redis.get(key));
 }
 
 /**
@@ -31,23 +31,5 @@ export async function redisGetKey(key) {
  * await redisSetKey('myKey', { foo: 'bar' });
  */
 export async function redisSetKey(key, value = {}) {
-    return redis.set(
-        key,
-        JSON.stringify(value),
-    );
-}
-
-/**
- * 判断是否存在这个key然后再取值，如果没有就返回null
- * @param key
- * @returns {Promise<Object|Array>}
- * @example
- * const value = await redisExistAndGetKey('myKey');
- * console.log(value); // { ... } or null
- */
-export async function redisExistAndGetKey(key) {
-    if (await redisExistKey(key)) {
-        return redisGetKey(key);
-    }
-    return null;
+  return redis.set(key, JSON.stringify(value));
 }

@@ -1,17 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-// 常量提取
-const mimeTypes = {
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.png': 'image/png',
-  '.gif': 'image/gif',
-  '.pdf': 'application/pdf',
-  '.txt': 'text/plain',
-  // 添加其他文件类型和MIME类型的映射
-};
-
 /**
  * 通用错误处理函数
  * @param err
