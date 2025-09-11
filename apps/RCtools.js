@@ -231,6 +231,7 @@ export class RCtools extends plugin {
 
   // B 站解析
   async bili(e) {
+    logger.info('[rc-plugin] bilibili');
     // 切面判断是否需要解析
     if (!(await this.isEnableResolve(RESOLVE_CONTROLLER_NAME_ENUM.bili))) {
       logger.info(`[R插件][全局解析控制] ${RESOLVE_CONTROLLER_NAME_ENUM.bili} 已拦截`);
